@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 
 FROM node:18.16.1
 
