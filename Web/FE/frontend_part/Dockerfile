@@ -7,7 +7,7 @@ COPY ./Web/FE/frontend_part/package.json .
 
 RUN npm install
 
-COPY ./Web/FE/frontend_part
+COPY ./Web/FE/frontend_part .
 
 RUN npm run build
 
