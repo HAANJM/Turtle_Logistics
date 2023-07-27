@@ -1,4 +1,4 @@
-FROM node:16.18.1
+FROM node:18.16.1
 
 # 이미지 내부 작업공간 설정
 WORKDIR /app
