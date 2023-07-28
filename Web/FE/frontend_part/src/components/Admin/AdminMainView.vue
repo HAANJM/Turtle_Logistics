@@ -1,10 +1,13 @@
 <template>
-  <div id="UpperContainer">
-    <sample-graph></sample-graph>
-    <span>샘플 2</span>
-  </div>
-  <div id="LowerContainer">
-    <sample-blue-print></sample-blue-print>
+  <div class="SampleContainer">
+    <div id="UpperContainer">
+      <sample-graph class="GraphContainer" />
+      <div class="SampleSecond">샘플 2</div>
+    </div>
+    <div id="LowerContainer">
+      <div class="SampleThird"></div>
+      <sample-blue-print class="BluepringContainer" />
+    </div>
   </div>
 </template>
 
@@ -22,13 +25,39 @@ export default {
 }
 </script>
 
-<style>
-#adminMainContainer{
-    position: absolute;
-    width: 76%;
-    height: 900px;
-    left: 25%;
-    top: 109px;
-    border: 9px solid #000000;
+<style scoped>
+.SampleContainer{
+  display : flex;
+  flex-direction: column;
+}
+#UpperContainer{
+  border : 1px solid black;
+  height: 450px;
+  margin: 20px;
+  display: flex;
+}
+#LowerContainer{
+  border : 1px solid black;
+  height: 450px;
+  margin: 20px;
+  display: flex;
+}
+.GraphContainer{
+  width: 60%;
+  border: 1px solid white;
+}
+.SampleSecond{
+  border : 1px solid white;
+  width: 35%;
+  margin-left: 30px;
+}
+.SampleThird{
+  border : 1px solid white;
+  width: 35%;
+}
+.BluepringContainer{
+  width: 60%;
+  border: 1px solid white;
+  margin-left: 30px;
 }
 </style>
