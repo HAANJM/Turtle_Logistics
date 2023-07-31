@@ -2,9 +2,9 @@ package class2.a204.dto;
 
 import lombok.*;
 
+@Getter
+@Setter
 @AllArgsConstructor
-@NoArgsConstructor
-@Data
 @Builder
 public class MessageDTO {
     String to;

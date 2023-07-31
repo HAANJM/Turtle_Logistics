@@ -4,13 +4,16 @@ import class2.a204.jwt.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
 @NoArgsConstructor
 @Table(name = "customer")
 public class Customer {
@@ -40,7 +43,19 @@ public class Customer {
     @NotNull
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "customer")
-    private List<Order> orders;
+    //CustomerDTO에서 toEntity() 를 위한 생성자
+    public Customer(String customerId, String password, String address, String phoneNumber){
+        this.customerId = customerId;
+        this.password = password;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+    }
+
+    //비밀번호 암호화
+    public void encodePassword(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(this.password);
+    }
+
+
 
 }
