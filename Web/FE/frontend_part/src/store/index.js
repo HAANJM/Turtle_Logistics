@@ -2,7 +2,7 @@
 import { createStore } from "vuex";
 import axios from "axios";
 import router from "../router";
-import createPersistedState  from "vuex-persistedstate";
+import createPersistedState from "vuex-persistedstate";
 
 const REST_API = "http://localhost:8080";
 
@@ -13,6 +13,7 @@ const store = createStore({
     machineStatus: [],
     orderNowList: [],
     orderNowcalculate: [],
+    logisticAnalysis: [],
   },
   getters: {},
   mutations: {
@@ -55,6 +56,9 @@ const store = createStore({
     },
     GET_CALCULATE(state, data) {
       state.orderNowcalculate = data;
+    },
+    GET_LOGISTIC_ANALYSIS(state, data) {
+      state.logisticAnalysis = data;
     },
   },
   actions: {
@@ -138,11 +142,11 @@ const store = createStore({
         method: "get",
       })
         .then((res) => {
-        commit("GET_ORDER_WEEK_DATE", res.data);
+          commit("GET_ORDER_WEEK_DATE", res.data);
         })
         .catch((err) => {
-        console.log(err.data);    
-        })
+          console.log(err.data);
+        });
     },
     getMachineStatus({ commit }) {
       const API_URL = `${REST_API}/machine`;
@@ -177,7 +181,7 @@ const store = createStore({
         method: "get",
       })
         .then((res) => {
-          let calculate = [0, 0, 0, 0, 0];
+          let calculate = [0, 0, 0, 0, 0, 0];
           for (let item of res.data) {
             switch (item.status) {
               case "주문 접수":
@@ -195,6 +199,9 @@ const store = createStore({
               case "배송 과정":
                 calculate[4] += 1;
                 break;
+              case "이상 발생":
+                calculate[5] += 1;
+                break;
             }
           }
           commit("GET_CALCULATE", calculate);
@@ -204,10 +211,25 @@ const store = createStore({
           console.log(err);
         });
     },
+    getLogisticAnalysis({ commit }) {
+      const API_URL = `${REST_API}/admin/logistic`;
+      axios({
+        url: API_URL,
+        method: "get",
+      })
+        .then((res) => {
+          commit("GET_LOGISTIC_ANALYSIS", res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
-  plugins: [createPersistedState({
-    whiteList: ["orderWeekData"],
-  })]
-})
+  plugins: [
+    createPersistedState({
+      whiteList: ["orderWeekData"],
+    }),
+  ],
+});
 
 export default store;
