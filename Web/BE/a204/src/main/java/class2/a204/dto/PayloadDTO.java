@@ -6,8 +6,8 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class MessageDTO {
-    private String to;
-    private String content;
+public class PayloadDTO {
+    private String topic;
+
+    private String message;
 }

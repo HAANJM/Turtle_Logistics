@@ -7,13 +7,10 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderUpdateDTO {
-
+public class MachineStatusDTO {
     @JsonProperty("order_num")
     private Long orderNum;
 
     private Integer type;
-
     private Integer result;
-
 }

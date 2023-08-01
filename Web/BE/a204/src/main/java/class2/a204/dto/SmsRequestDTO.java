@@ -4,16 +4,17 @@ import lombok.*;
 
 import java.util.List;
 
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
 public class SmsRequestDTO {
-    String type;
-    String contentType;
-    String countryCode;
-    String from;
-    String content;
-    List<MessageDTO> messages;
+    private String type;
+    private String contentType;
+    private String countryCode;
+    private String from;
+    private String content;
+    private List<MessageDTO> messages;
 
 }

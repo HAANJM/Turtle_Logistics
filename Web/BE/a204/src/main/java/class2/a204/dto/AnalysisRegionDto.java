@@ -1,13 +1,16 @@
 package class2.a204.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
-public class AnalysisRegionDto {
+public class AnalysisRegionDTO {
     private Integer region;
     private Long count;
+
+    public AnalysisRegionDTO(Integer region, Long count){
+        this.region = region;
+        this.count = count;
+    }
 }
