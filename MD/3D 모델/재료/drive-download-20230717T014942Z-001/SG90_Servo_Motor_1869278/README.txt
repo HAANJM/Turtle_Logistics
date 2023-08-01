@@ -1,1 +1,0 @@
-SG90 Servo Motor by AndreaRade on Thingiverse: https://www.thingiverse.com/thing:1869278
