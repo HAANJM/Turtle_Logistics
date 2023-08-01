@@ -32,19 +32,25 @@
       variant="outlined">
         1년
       </v-btn>
+
+      <v-btn @click="check"
+      background-color='rgb(53, 53, 53)'
+      variant="outlined">
+        1년
+      </v-btn>
     </div>
     <div class="OrderGraphContainer">
       
     <hr><hr>
-    <Line :data="chartData"/>
-    <Bar :data="chartData" />
+    <Line :data="chartData" :key="renderCount"/>
     </div>
   </div>
 </template>
 
 
 <script>
-import { Bar, Line } from 'vue-chartjs'
+import { mapState } from 'vuex';
+import { Line } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale,PointElement,
   LineElement  } from 'chart.js'
 
@@ -54,46 +60,70 @@ ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale,
 export default {
     name: "OrderByDate",
     components:{
-      Bar,
       Line
     },
     data: () => ({
 
       chartData: {
-        labels: [ '0721', '0722', '0723', '0724', '0725', '0726', '0727'],
+        labels: [],
         datasets: [
           {
             label: '주문건수',
             backgroundColor: 'salmon',
             borderColor: 'salmon',
             color: 'red',
-            data: [40, 20, 12, 25, 38, 50, 15]
+            data: []
           }
-        ]
-      }
+        ],
+      },
+      renderCount: 0,
 
     }),
-    created(){
+    mounted(){
       const offset = new Date().getTimezoneOffset() * 60000;
       const today = new Date(Date.now() - offset);
       const end_day = today.toISOString();
-      const week = new Date(Date.now() - (7 * 24 * 60 * 60 * 1000));
+      const week = new Date(Date.now() - (6 * 24 * 60 * 60 * 1000) - offset);
       const start_day = week.toISOString();
 
       const date = {
         end : end_day,
         start : start_day,
       }
+      
+      this.$store.dispatch("getOrderWeekData", date);
 
-      this.$store.dispatch("getOrderData", date);
+      var idx = 0;
+      this.chartData.labels = [];
+      this.chartData.datasets.data = [];
+
+
+        for (let key in this.orderWeekData) {
+          this.chartData.labels[idx] = key.substr(4);
+          this.chartData.datasets[0].data[idx] =  this.orderWeekData[key];
+          idx++;
+        }
+        
+        this.renderCount += 1;
+      
+    },
+    computed:{
+      ...mapState(["orderWeekData", "orderData"]),
 
     },
     methods:{
+      check(){
+
+        for (let key in this.orderData) {
+            console.log(this.orderData[key])
+        }
+
+      },
       getOrderDataWeek(){
           const offset = new Date().getTimezoneOffset() * 60000;
           const today = new Date(Date.now() - offset);
           const end_day = today.toISOString();
-          const week = new Date(Date.now() - (7 * 24 * 60 * 60 * 1000));
+          const week = new Date(Date.now() - (6 * 24 * 60 * 60 * 1000) - offset);
           const start_day = week.toISOString();
 
           const date = {
@@ -102,8 +132,26 @@ export default {
           }
 
           this.$store.dispatch("getOrderData", date);
+
+          var idx = 0;
+          this.chartData.labels = [];
+          this.chartData.datasets.data = [];
+
+          setTimeout(() =>{
+
+            for (let key in this.orderData) {
+              this.chartData.labels[idx] = key.substr(4);
+              this.chartData.datasets[0].data[idx] =  this.orderData[key];
+              idx++;
+            }
+            this.renderCount += 1;
+          }, 10)
+
+
+
       },
       getOrderDataMonth(){
+
           const offset = new Date().getTimezoneOffset() * 60000;
           const today = new Date(Date.now() - offset);
           const end_day = today.toISOString();
@@ -119,6 +167,21 @@ export default {
           }
 
           this.$store.dispatch("getOrderData", date);
+          this.chartData.labels = [];
+          this.chartData.datasets.data = [];
+          var idx = 0;
+
+          setTimeout(() => {
+
+            for (let key in this.orderData) {
+              this.chartData.labels[idx] = key.substr(4);
+              this.chartData.datasets[0].data[idx] =  this.orderData[key];
+              idx++;
+            }
+          this.renderCount += 1;
+          }, 10)
+
+
       },
       getOrderData3Month(){
           const offset = new Date().getTimezoneOffset() * 60000;
@@ -135,7 +198,38 @@ export default {
             start : start_day,
           }
 
+          var idx = 0;
+
           this.$store.dispatch("getOrderData", date);
+            
+          this.chartData.labels = [];
+          this.chartData.datasets[0].data = [];
+
+          setTimeout(()=>{
+            
+              for (let key in this.orderData) {
+
+                if(this.chartData.labels[idx] == undefined){
+                  this.chartData.labels[idx] = key.substr(0, 6);
+                  this.chartData.datasets[0].data[idx] =  this.orderData[key];
+                }
+                else if(key.substr(0, 6) != this.chartData.labels[idx]){
+                  idx++;
+                  this.chartData.datasets[0].data[idx] = 0;
+                  this.chartData.labels[idx] = key.substr(0, 6);
+                  this.chartData.datasets[0].data[idx] +=  this.orderData[key];
+                }
+                else if(key.substr(0, 6) == this.chartData.labels[idx]){
+                  this.chartData.datasets[0].data[idx] +=  this.orderData[key];
+                }
+                
+              }
+    
+              this.renderCount += 1;
+            }, 10);
+
+            
+
       },
       getOrderData6Month(){
           const offset = new Date().getTimezoneOffset() * 60000;
@@ -153,6 +247,33 @@ export default {
           }
 
           this.$store.dispatch("getOrderData", date);
+          var idx = 0;
+          this.chartData.labels = [];
+          this.chartData.datasets[0].data = [];
+
+          setTimeout(()=>{
+            
+              for (let key in this.orderData) {
+
+                if(this.chartData.labels[idx] == undefined){
+                  this.chartData.labels[idx] = key.substr(0, 6);
+                  this.chartData.datasets[0].data[idx] =  this.orderData[key];
+                }
+                else if(key.substr(0, 6) != this.chartData.labels[idx]){
+                  idx++;
+                  this.chartData.datasets[0].data[idx] = 0;
+                  this.chartData.labels[idx] = key.substr(0, 6);
+                  this.chartData.datasets[0].data[idx] +=  this.orderData[key];
+                }
+                else if(key.substr(0, 6) == this.chartData.labels[idx]){
+                  this.chartData.datasets[0].data[idx] +=  this.orderData[key];
+                }
+                
+              }
+    
+              this.renderCount += 1;
+            }, 10);
+
       },
       getOrderDataYear(){
           const offset = new Date().getTimezoneOffset() * 60000;
@@ -170,6 +291,34 @@ export default {
           }
 
           this.$store.dispatch("getOrderData", date);
+
+          var idx = 0;
+          this.chartData.labels = [];
+          this.chartData.datasets.data = [];
+
+          setTimeout(()=>{
+            
+              for (let key in this.orderData) {
+
+                if(this.chartData.labels[idx] == undefined){
+                  this.chartData.labels[idx] = key.substr(0, 6);
+                  this.chartData.datasets[0].data[idx] =  this.orderData[key];
+                }
+                else if(key.substr(0, 6) != this.chartData.labels[idx]){
+                  idx++;
+                  this.chartData.datasets[0].data[idx] = 0;
+                  this.chartData.labels[idx] = key.substr(0, 6);
+                  this.chartData.datasets[0].data[idx] +=  this.orderData[key];
+                }
+                else if(key.substr(0, 6) == this.chartData.labels[idx]){
+                  this.chartData.datasets[0].data[idx] +=  this.orderData[key];
+                }
+                
+              }
+    
+              this.renderCount += 1;
+            }, 10);
+
       }
 
 
