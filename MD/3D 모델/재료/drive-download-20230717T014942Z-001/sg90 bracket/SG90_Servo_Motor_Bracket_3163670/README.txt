@@ -1,1 +1,0 @@
-SG90 Servo Motor Bracket by Reilly_Callaway on Thingiverse: https://www.thingiverse.com/thing:3163670
