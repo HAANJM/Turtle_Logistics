@@ -4,7 +4,6 @@ import router from "@/router";
 const adminStore = {
   namespaced: true,
   state: {
-    adminToken: null,
     logisticAnalysis: [],
   },
   getters: {},
@@ -14,12 +13,11 @@ const adminStore = {
       router.push("/adminLogin");
     },
     ADMIN_LOGIN(state, data) {
-      state.adminToken = data.accessToken; //토큰 저장
-      localStorage.setItem("adminToken", data.accessToken); // 로컬스토리지에 accessToken 저장
-      localStorage.setItem("adminRefreshToken", data.refreshToken); //로컬스토리지에 refreshToken 저장
+      state;
+      localStorage.setItem("adminToken", data.accessToken);
+      localStorage.setItem("adminRefreshToken", data.refreshToken);
     },
-    LOGOUT(state) {
-      state.adminToken = null;
+    LOGOUT() {
       localStorage.removeItem("adminToken");
       localStorage.removeItem("adminRefreshToken");
     },
@@ -52,11 +50,16 @@ const adminStore = {
         console.log(error);
       }
     },
+    //로그아웃
+    Logout({ commit }) {
+      commit("LOGOUT");
+      router.push("/");
+    },
     //물류 분석 자료
     async getLogisticAnalysis({ commit }) {
       try {
         const response = await adminAPI.logisticAnalysis();
-        commit("GGET_LOGISTIC_ANALYSIS", response.data);
+        commit("GET_LOGISTIC_ANALYSIS", response.data);
       } catch (error) {
         console.log(error);
       }

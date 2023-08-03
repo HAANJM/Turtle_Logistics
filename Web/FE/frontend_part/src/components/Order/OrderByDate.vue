@@ -21,8 +21,6 @@
       <v-btn @click="getOrderDataYear" background-color="rgb(53, 53, 53)" variant="outlined">
         1년
       </v-btn>
-
-      <v-btn @click="check" background-color="rgb(53, 53, 53)" variant="outlined"> 1년 </v-btn>
     </div>
     <div class="OrderGraphContainer">
       <hr />
@@ -112,29 +110,24 @@ export default {
       start: start_day,
     };
 
-    this.$store.dispatch("order/getOrderWeekData", date);
+    this.$store.dispatch("order/getOrderData", date);
 
     var idx = 0;
     this.chartData.labels = [];
     this.chartData.datasets.data = [];
 
-    for (let key in this.orderWeekData) {
+    for (let key in this.orderData) {
       this.chartData.labels[idx] = key.substr(4);
-      this.chartData.datasets[0].data[idx] = this.orderWeekData[key];
+      this.chartData.datasets[0].data[idx] = this.orderData[key];
       idx++;
     }
 
     this.renderCount += 1;
   },
   computed: {
-    ...mapState(["orderWeekData", "orderData"]),
+    ...mapState("order", ["orderData"]),
   },
   methods: {
-    check() {
-      for (let key in this.orderData) {
-        console.log(this.orderData[key]);
-      }
-    },
     getOrderDataWeek() {
       const offset = new Date().getTimezoneOffset() * 60000;
       const today = new Date(Date.now() - offset);
@@ -169,9 +162,6 @@ export default {
       const month = new Date(today.setMonth(today.getMonth() - 1));
       const start_day = month.toISOString();
 
-      console.log(end_day);
-      console.log(start_day);
-
       const date = {
         end: end_day,
         start: start_day,
@@ -197,9 +187,6 @@ export default {
       const end_day = today.toISOString();
       const month = new Date(today.setMonth(today.getMonth() - 3));
       const start_day = month.toISOString();
-
-      console.log(end_day);
-      console.log(start_day);
 
       const date = {
         end: end_day,
@@ -238,9 +225,6 @@ export default {
       const month = new Date(today.setMonth(today.getMonth() - 6));
       const start_day = month.toISOString();
 
-      console.log(end_day);
-      console.log(start_day);
-
       const date = {
         end: end_day,
         start: start_day,
@@ -276,9 +260,6 @@ export default {
       const month = new Date(today.setFullYear(today.getFullYear() - 1));
       const start_day = month.toISOString();
 
-      console.log(end_day);
-      console.log(start_day);
-
       const date = {
         end: end_day,
         start: start_day,
@@ -312,7 +293,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .OrderDateContainer {
   margin: 20px;
 }

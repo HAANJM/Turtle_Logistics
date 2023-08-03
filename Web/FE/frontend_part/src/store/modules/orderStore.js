@@ -4,16 +4,17 @@ const orderStore = {
   namespaced: true,
   state: {
     orderData: [],
+    orderWeekData: [],
     orderNowList: [],
     orderNowcalculate: [],
   },
   getters: {},
   mutations: {
-    GET_ORDER_DATE(state, date) {
-      state.orderData = date;
+    GET_ORDER_DATE(state, data) {
+      state.orderData = data;
     },
-    GET_ORDER_WEEK_DATE(state, date) {
-      state.orderWeekData = date;
+    GET_ORDER_WEEK_DATE(state, data) {
+      state.orderWeekData = data;
     },
     GET_ORDER_NOWS(state, data) {
       state.orderNowList = data;
