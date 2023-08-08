@@ -17,6 +17,7 @@ import AdminRegist from "../components/Regist/AdminRegist.vue";
 import CustomerRegist from "../components/Regist/CustomerRegist.vue";
 import CustomerOrder from "../components/Order/CustomerOrder.vue";
 import ErrorView from "../views/ErrorView.vue";
+import MainCctv from "../components/Cctv/MainCctv.vue";
 
 // 라우터 설계
 const routes = [
@@ -66,6 +67,11 @@ const routes = [
         name: "OrderByRegion",
         component: OrderByRegion,
       },
+      {
+        path: "mainCctv",
+        name: "MainCctv",
+        component: MainCctv,
+      }
     ],
   },
   {
