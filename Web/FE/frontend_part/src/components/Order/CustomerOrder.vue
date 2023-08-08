@@ -1,5 +1,6 @@
 <template>
   <div class="CustomerContainer">
+    <header-nav></header-nav>
     <div>
       <img class="MainTurtle" src="./MainTurtle.png" />
     </div>
@@ -48,6 +49,11 @@
             required
           ></v-text-field>
 
+          <v-select
+            label="지역"
+            :items="['서울', '경기', 'Florida', 'Georgia', 'Texas', 'Wyoming']"
+          ></v-select>
+
           <v-text-field
             v-model="order.detailAddress"
             :rules="nameRules"
@@ -66,6 +72,7 @@
 </template>
 
 <script>
+import HeaderNav from "@/components/common/HeaderNav.vue";
 export default {
   name: "CustomerOrder",
   data: () => ({
@@ -85,6 +92,9 @@ export default {
     doOrder() {
       this.$store.dispatch("order/doOrder", this.order);
     },
+  },
+  components: {
+    HeaderNav,
   },
 };
 </script>
@@ -108,5 +118,8 @@ export default {
 }
 .test * {
   background-color: red !important;
+}
+v-overlay-container * {
+  background-color: black;
 }
 </style>
