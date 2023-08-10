@@ -5,6 +5,7 @@ const adminStore = {
   namespaced: true,
   state: {
     logisticAnalysis: [],
+    image: null,
   },
   getters: {},
   mutations: {
@@ -23,6 +24,9 @@ const adminStore = {
     },
     GET_LOGISTIC_ANALYSIS(state, data) {
       state.logisticAnalysis = data;
+    },
+    GET_IMAGE(state, data) {
+      state.image = data;
     },
   },
   actions: {
@@ -64,10 +68,29 @@ const adminStore = {
         console.log(error);
       }
     },
-    SendSMS({ commit }, machineDetail) {
+    async SendSMS(_, machineDetail) {
       try {
-        adminAPI.sendMessage(machineDetail);
-        commit;
+        await adminAPI.sendMessage(machineDetail);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    takeScreenshot(_, { image, log_num }) {
+      try {
+        adminAPI.uploadImage(image, log_num);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getImage({ commit }, log_num) {
+      try {
+        const response = await adminAPI.downloadImage(log_num);
+        const base64 = btoa(
+          new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), "")
+        );
+        const imageDataUrl = "data:" + response.headers["content-type"] + ";base64," + base64;
+
+        commit("GET_IMAGE", imageDataUrl);
       } catch (error) {
         console.log(error);
       }
