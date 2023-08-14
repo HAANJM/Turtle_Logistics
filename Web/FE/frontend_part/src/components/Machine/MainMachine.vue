@@ -1,30 +1,40 @@
 <template>
   <div class="MachineMainContainer">
     <div class="MachineContainer">
-      <h1>기기제어</h1>
+      <h1>기기 제어</h1>
       <span class="MachineSpan">
-        <h2>{{ this.currentTime }}</h2>
+        <!-- <h1>{{ this.currentTime }}</h1> -->
         &nbsp;&nbsp;&nbsp;
-        <v-btn @click="getMachineOff" background-color="rgb(53, 53, 53)" variant="outlined">
+        <v-btn
+          @click="getMachineOff"
+          background-color="rgb(53, 53, 53)"
+          variant="outlined"
+          class="offButton"
+        >
           전원 종료
         </v-btn>
-        <v-btn @click="getMachineOn" background-color="rgb(53, 53, 53)" variant="outlined">
+        <v-btn
+          @click="getMachineOn"
+          background-color="rgb(53, 53, 53)"
+          variant="outlined"
+          class="onButton"
+        >
           전원 시작
         </v-btn>
       </span>
     </div>
+    <div class="MachineImgContainer">
+      <img class="machineImg" :src="errorImg" alt="image" />
+    </div>
     <div class="LogTableContainer">
-      <div class="MachineImgContainer">
-        <img class="machineImg" :src="errorImg" alt="image" />
-      </div>
-      <v-table density="compact" theme="dark">
+      <v-table density="compact" theme="dark" class="main_table">
         <thead>
           <tr>
-            <th class="text-left">번호</th>
-            <th class="text-left">날짜</th>
-            <th class="text-left">로그명</th>
-            <th class="text-left">기계</th>
-            <th class="text-left"></th>
+            <th style="text-align: center">번호</th>
+            <th style="text-align: center">날짜</th>
+            <th style="text-align: center">로그명</th>
+            <th style="text-align: center">기계</th>
+            <th style="text-align: center"></th>
           </tr>
         </thead>
         <tbody>
@@ -40,38 +50,25 @@
     </div>
   </div>
   <LogModal :isOpen="isModalOpen" @close="closeModal">
-    <template #header>
-      <h3>상세 정보</h3>
-    </template>
-
     <div class="log-details">
       <table>
         <tr>
           <th>로그번호</th>
-          <td>{{ selectedLog.log_num }}</td>
-        </tr>
-        <tr>
           <th>날짜</th>
-          <td>{{ selectedLog.error_date }}</td>
-        </tr>
-        <tr>
           <th>로그명</th>
-          <td>{{ selectedLog.error_message }}</td>
+          <th>기계</th>
         </tr>
         <tr>
-          <th>기계</th>
+          <td>{{ selectedLog.log_num }}</td>
+          <td>{{ selectedLog.error_date }}</td>
+          <td>{{ selectedLog.error_message }}</td>
           <td>{{ selectedLog.machine_id }}</td>
         </tr>
       </table>
     </div>
-
     <div class="log-image">
       <img :src="image" alt="Selected Machine Image" />
     </div>
-
-    <template #footer>
-      <button @click="closeModal">닫기</button>
-    </template>
   </LogModal>
 </template>
 
@@ -96,14 +93,8 @@ export default {
     getMachineOn() {
       this.$store.dispatch("machine/machineOn");
     },
-    updateParentHeight() {
-      const container = this.$el.offsetHeight; // 자식 컴포넌트의 내용 높이
-      // App.vue로 이벤트를 발생시켜 자식 컴포넌트의 내용 높이를 전달
-      this.$emit("childContentHeightChanged", container);
-    },
     changeImg(machine_id) {
       this.$store.state.errorImg = `/Error_BluePrint/BluePrint_${machine_id}.png`;
-      this.updateParentHeight();
     },
     async getMachineLog() {
       let today = new Date();
@@ -154,13 +145,10 @@ export default {
     ...mapState("admin", ["image"]),
   },
   mounted() {
-    this.updateParentHeight();
     this.getMachineLog();
   },
   beforeUnmount() {
     clearInterval(this.myTimer);
-    // 컴포넌트가 언마운트(제거)되기 전 실행되는 로직
-    window.removeEventListener("resize", this.updateParentHeight);
   },
 };
 </script>
@@ -172,12 +160,13 @@ export default {
   justify-content: space-between;
   margin: 20px;
   padding: 20px;
+  align-items: center;
   box-shadow: 0px 0px 6px -1px black;
   background-color: rgb(55, 55, 55);
   border-radius: 10px;
 }
 .LogTableContainer {
-  margin: 20px;
+  margin: 0px 20px 0px 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -191,17 +180,50 @@ export default {
 }
 .MachineSpan {
   display: flex;
+  align-items: center;
 }
 .MachineImgContainer {
+  background-color: rgb(55, 55, 55);
   text-align: center;
-  margin: 30px;
+  margin: 0px 20px 20px 20px;
+  box-shadow: 0px 0px 6px -1px black;
+  border-radius: 10px;
 }
 .machineImg {
-  width: 1000px;
+  width: 60%;
   height: auto;
 }
-.v-table {
+.main_table th,
+.main_table td {
   overflow-y: auto;
   scrollbar-width: 0px;
+  text-align: center;
+  vertical-align: middle;
+}
+.offButton {
+  margin-right: 5%;
+}
+
+/* 모달 css */
+
+.log-details table {
+  width: 100%;
+  max-width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+}
+
+.log-details th,
+.log-details td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.log-image img {
+  max-width: 100%;
+  width: auto;
+  display: block;
+  margin: 20px auto;
 }
 </style>

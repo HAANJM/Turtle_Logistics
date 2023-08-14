@@ -24,7 +24,7 @@
         </v-btn>
       </span>
     </div>
-    &nbsp;
+
     <div class="OrderGraphContainer">
       <Line :data="chartData" :key="renderCount" :options="chartOptions" />
     </div>
@@ -68,8 +68,8 @@ export default {
       datasets: [
         {
           label: "주문건수",
-          backgroundColor: "salmon",
-          borderColor: "salmon",
+          backgroundColor: "rgb(250, 100, 130)",
+          borderColor: "rgb(250, 100, 130)",
           color: "red",
           data: [],
         },
@@ -101,8 +101,6 @@ export default {
     renderCount: 0,
   }),
   async mounted() {
-    this.updateParentHeight();
-
     const offset = new Date().getTimezoneOffset() * 60000;
     const today = new Date(Date.now() - offset);
     const end_day = today.toISOString();
@@ -127,10 +125,6 @@ export default {
     }
 
     this.renderCount += 1;
-  },
-  beforeUnmount() {
-    // 컴포넌트가 언마운트(제거)되기 전 실행되는 로직
-    window.removeEventListener("resize", this.updateParentHeight);
   },
   computed: {
     ...mapState("order", ["orderData"]),
@@ -182,8 +176,6 @@ export default {
 
       setTimeout(() => {
         for (let key in this.orderData) {
-          console.log(key);
-          console.log(this.orderData[key]);
           this.chartData.labels[idx] = key.substr(4);
           this.chartData.datasets[0].data[idx] = this.orderData[key];
           idx++;
@@ -202,7 +194,6 @@ export default {
         end: end_day,
         start: start_day,
       };
-      console.log(date);
       var idx = 0;
 
       await this.$store.dispatch("order/getOrderData", date);
@@ -299,11 +290,6 @@ export default {
         this.renderCount += 1;
       }, 10);
     },
-    updateParentHeight() {
-      const container = this.$el.offsetHeight; // 자식 컴포넌트의 내용 높이
-      // App.vue로 이벤트를 발생시켜 자식 컴포넌트의 내용 높이를 전달
-      this.$emit("childContentHeightChanged", container);
-    },
   },
 };
 </script>
@@ -313,6 +299,7 @@ export default {
   margin: 20px;
 }
 .OrderGraphContainer {
+  margin-top: 20px;
   padding: 20px;
   box-shadow: 0px 0px 6px -1px black;
   background-color: rgb(55, 55, 55);
@@ -327,10 +314,17 @@ export default {
 .ButtonContainer {
   padding: 20px;
   display: flex;
+  align-items: center;
   flex-direction: row;
   justify-content: space-between;
   box-shadow: 0px 0px 6px -1px black;
   background-color: rgb(55, 55, 55);
   border-radius: 10px;
+}
+
+.ButtonContainer span {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 </style>
