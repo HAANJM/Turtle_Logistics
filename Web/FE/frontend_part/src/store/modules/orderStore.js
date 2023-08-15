@@ -26,6 +26,9 @@ const orderStore = {
     GET_DATA_ANALYSIS_REGION(state, data) {
       state.orderRegion = data;
     },
+    DO_ORDER() {
+      alert("주문이 완료되었습니다.");
+    }
   },
   actions: {
     //일자별 주문 분석
@@ -94,9 +97,10 @@ const orderStore = {
     },
     async doOrder({ commit }, order) {
       try {
-        orderAPI.newOrder(order);
-        commit;
+        await orderAPI.newOrder(order);
+        commit("DO_ORDER");
       } catch (error) {
+        alert("오류가 발생했습니다. 다시 시도해주세요.");
         console.log(error);
       }
     },

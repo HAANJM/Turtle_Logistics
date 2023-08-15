@@ -1,9 +1,11 @@
 <template>
   <div id="sideBar">
     <div id="SideLogo">
-      <div id="LogoImage">
-        <img class="SubTurtle" :src="subSrc" />
-      </div>
+      <router-link to="/admin" @click.stop="selectMenu('AdminMainView')">
+        <div id="LogoImage">
+          <img class="SubTurtle" :src="subSrc" />
+        </div>
+      </router-link>
       <div id="MainTL">
         <router-link to="/admin" @click.stop="selectMenu('AdminMainView')">
           TL <br />
@@ -24,14 +26,16 @@
           :style="selectedMenu === 'AdminMainView' ? selectedtextstyle : {}"
         >
           <div class="btn-inner-content">
-            <font-awesome-icon
-              :icon="['fas', 'house-chimney']"
-              :style="
-                selectedMenu === 'AdminMainView' ? { color: '#e64878' } : { color: '#d2d2d2' }
-              "
-              class="icon-padding-right"
-            />
-            메인화면
+            <div>
+              <font-awesome-icon
+                :icon="['fas', 'house-chimney']"
+                :style="
+                  selectedMenu === 'AdminMainView' ? { color: '#e64878' } : { color: '#d2d2d2' }
+                "
+                class="icon-padding-right"
+              />
+            </div>
+            <p>메인화면</p>
           </div>
         </v-btn>
       </router-link>
@@ -47,11 +51,15 @@
           :style="selectedMenu === 'OrderByDate' ? selectedtextstyle : {}"
         >
           <div class="btn-inner-content">
-            <font-awesome-icon
-              :icon="['fas', 'calendar-check']"
-              :style="selectedMenu === 'OrderByDate' ? { color: '#e64878' } : { color: '#d2d2d2' }"
-              class="icon-padding-right"
-            />
+            <div>
+              <font-awesome-icon
+                :icon="['fas', 'calendar-check']"
+                :style="
+                  selectedMenu === 'OrderByDate' ? { color: '#e64878' } : { color: '#d2d2d2' }
+                "
+                class="icon-padding-right"
+              />
+            </div>
             기간주문내역
           </div>
         </v-btn>
@@ -68,13 +76,15 @@
           :style="selectedMenu === 'OrderByRegion' ? selectedtextstyle : {}"
         >
           <div class="btn-inner-content">
-            <font-awesome-icon
-              :icon="['fas', 'map-location-dot']"
-              :style="
-                selectedMenu === 'OrderByRegion' ? { color: '#e64878' } : { color: '#d2d2d2' }
-              "
-              class="icon-padding-right"
-            />
+            <div>
+              <font-awesome-icon
+                :icon="['fas', 'map-location-dot']"
+                :style="
+                  selectedMenu === 'OrderByRegion' ? { color: '#e64878' } : { color: '#d2d2d2' }
+                "
+                class="icon-padding-right"
+              />
+            </div>
             지역주문내역
           </div></v-btn
         >
@@ -87,11 +97,13 @@
           :style="selectedMenu === 'MainGraph' ? selectedtextstyle : {}"
         >
           <div class="btn-inner-content">
-            <font-awesome-icon
-              :icon="['fas', 'clipboard']"
-              :style="selectedMenu === 'MainGraph' ? { color: '#e64878' } : { color: '#d2d2d2' }"
-              class="icon-padding-right"
-            />
+            <div>
+              <font-awesome-icon
+                :icon="['fas', 'clipboard']"
+                :style="selectedMenu === 'MainGraph' ? { color: '#e64878' } : { color: '#d2d2d2' }"
+                class="icon-padding-right"
+              />
+            </div>
             주문현황
           </div></v-btn
         >
@@ -108,13 +120,15 @@
           :style="selectedMenu === 'MainBluePrint' ? selectedtextstyle : {}"
         >
           <div class="btn-inner-content">
-            <font-awesome-icon
-              :icon="['fas', 'industry']"
-              :style="
-                selectedMenu === 'MainBluePrint' ? { color: '#e64878' } : { color: '#d2d2d2' }
-              "
-              class="icon-padding-right"
-            />
+            <div>
+              <font-awesome-icon
+                :icon="['fas', 'industry']"
+                :style="
+                  selectedMenu === 'MainBluePrint' ? { color: '#e64878' } : { color: '#d2d2d2' }
+                "
+                class="icon-padding-right"
+              />
+            </div>
             공정현황
           </div></v-btn
         >
@@ -131,13 +145,15 @@
           :style="selectedMenu === 'MainLogistics' ? selectedtextstyle : {}"
         >
           <div class="btn-inner-content">
-            <font-awesome-icon
-              :icon="['fas', 'list-check']"
-              :style="
-                selectedMenu === 'MainLogistics' ? { color: '#e64878' } : { color: '#d2d2d2' }
-              "
-              class="icon-padding-right"
-            />
+            <div>
+              <font-awesome-icon
+                :icon="['fas', 'list-check']"
+                :style="
+                  selectedMenu === 'MainLogistics' ? { color: '#e64878' } : { color: '#d2d2d2' }
+                "
+                class="icon-padding-right"
+              />
+            </div>
             물류현황
           </div></v-btn
         >
@@ -154,11 +170,15 @@
           :style="selectedMenu === 'MainMachine' ? selectedtextstyle : {}"
         >
           <div class="btn-inner-content">
-            <font-awesome-icon
-              :icon="['fas', 'hand-pointer']"
-              :style="selectedMenu === 'MainMachine' ? { color: '#e64878' } : { color: '#d2d2d2' }"
-              class="icon-padding-right"
-            />
+            <div>
+              <font-awesome-icon
+                :icon="['fas', 'hand-pointer']"
+                :style="
+                  selectedMenu === 'MainMachine' ? { color: '#e64878' } : { color: '#d2d2d2' }
+                "
+                class="icon-padding-right"
+              />
+            </div>
             기기제어
           </div></v-btn
         >
@@ -171,11 +191,13 @@
           :style="selectedMenu === 'MainCctv' ? selectedtextstyle : {}"
         >
           <div class="btn-inner-content">
-            <font-awesome-icon
-              :icon="['fas', 'record-vinyl']"
-              :style="selectedMenu === 'MainCctv' ? { color: '#e64878' } : { color: '#d2d2d2' }"
-              class="icon-padding-right"
-            />
+            <div>
+              <font-awesome-icon
+                :icon="['fas', 'record-vinyl']"
+                :style="selectedMenu === 'MainCctv' ? { color: '#e64878' } : { color: '#d2d2d2' }"
+                class="icon-padding-right"
+              />
+            </div>
             CCTV
           </div></v-btn
         >
@@ -266,5 +288,6 @@ export default {
   margin-top: 3%;
   display: flex;
   width: 100%;
+  align-items: center;
 }
 </style>
