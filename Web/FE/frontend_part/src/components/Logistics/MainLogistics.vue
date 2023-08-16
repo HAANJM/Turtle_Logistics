@@ -102,29 +102,46 @@
       </v-table>
     </div>
   </div>
+  <public-modal
+    :isVisible="showModal"
+    title="물류 현황 갱신"
+    message="물류 현황이 성공적으로 새로고침되었습니다."
+    @close="closeModal"
+  />
 </template>
 
 <script>
 import { mapState } from "vuex";
+import PublicModal from "@/components/Modals/PublicModal.vue";
 
 export default {
   name: "MainLogistics",
+  components: {
+    PublicModal,
+  },
   data() {
     return {
       myTimer: null,
       sortBy: null, // 현재 정렬 기준
       sortOrder: true, // 정렬 순서 (true: 오름차순, false: 내림차순)
       isLoading: false,
+      showModal: false,
     };
   },
   computed: {
     ...mapState("admin", ["logisticAnalysis"]),
   },
   methods: {
+    closeModal() {
+      this.showModal = false; // 모달 창을 닫습니다.
+    },
     async get_logistic_analysis() {
       this.isLoading = true;
       await this.$store.dispatch("admin/getLogisticAnalysis");
       this.isLoading = false;
+      this.showModal = true;
+
+      this.sortTable("product_num");
     },
     //테이블 정렬 기능
     sortTable(column) {

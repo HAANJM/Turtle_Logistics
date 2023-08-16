@@ -8,7 +8,7 @@
     <video class="VideoContainer" ref="videoElement" hidden autoplay></video>
     <canvas ref="canvasElement" hidden></canvas>
   </div>
-  <error-modal
+  <public-modal
     :isVisible="isModalVisible"
     :title="modalTitle"
     :message="modalMessage"
@@ -21,7 +21,7 @@ import HeaderNav from "@/components/common/HeaderNav.vue";
 import SidebarNav from "@/components/common/SidebarNav.vue";
 // import AdminMainView from "@/components/Admin/AdminMainView.vue";
 import { mapState } from "vuex";
-import ErrorModal from "@/components/Modals/ErrorModal.vue";
+import PublicModal from "@/components/Modals/PublicModal.vue";
 
 export default {
   name: "AdminView",
@@ -33,8 +33,8 @@ export default {
     modalTitle: "Alert",
     modalMessage: "",
   }),
-  created(){
-    this.changeImg('0000');
+  created() {
+    this.changeImg("0000");
   },
   methods: {
     // updateAppHeight(childContentHeight) {
@@ -112,7 +112,7 @@ export default {
   components: {
     HeaderNav,
     SidebarNav,
-    ErrorModal,
+    PublicModal,
   },
   async mounted() {
     await this.initWebcam();
@@ -121,7 +121,7 @@ export default {
       await this.getMachineStatus(); // 매 초마다 새 데이터를 가져옵니다.
       let addedLogs;
       // previousMachineLog와 machineLog를 비교하여 새로운 로그를 찾습니다.
-      if (this.machineStatus[`로그`] != null) {
+      if (this.machineStatus[`로그`] != null && this.machineStatus[`로그`].length > 0) {
         const brokenList = this.machineStatus[`로그`];
         this.changeImg(brokenList[0].machine_id);
         addedLogs = this.machineStatus["로그"].filter((log) => !log.recorded);
