@@ -43,8 +43,7 @@ export default {
   }),
   methods: {
     doCustomerLogin() {
-      // this.$store.dispatch("customer/customerLogin", this.customer);
-      alert("신규회원가입이 일시적으로 중지되었습니다.");
+      this.$store.dispatch("customer/customerLogin", this.customer);
     },
   },
 };
