@@ -130,16 +130,18 @@
 
   IoT
 
-  - 예시1
-  - 예시2
+  - snake_case
+  - 
 
 ### 1. Planning & Design
 
 - 아이디어 정리
+![Subject.png](./image/Subject.png)
 - 와이어 프레임
 ![image.png](./image/wire.png)
 - ERDCloud
-수정중
+
+![ERD_DIAGRAM.png](./image/ERD_DIAGRAM.png)
 - API 명세서
 ![API_Image](./image/teamP_API.png)
 - 아키텍처
@@ -167,10 +169,10 @@
     ### iv.3
     <img src="./image/HW/belt/ih3.jpg" width="500">
   - 전체 공정 <br>
-  추후 업데이트 예정~
+    <img src="./image/HW/hw_main.jpg" width="500">
 
 - Jira를 통한 일정관리
-  - 매 주 월요일에 주 단위 이슈를 생성하고 금요일까지 40의 Story Point를 완료하기 위해 노력함
+  - 매 주 월요일에 주 단위 이슈를 생성하고 금요일까지 40의 Story Point를 완료함으로써 일정을 관리했습니다
 
   ![3week_jira](./image/3week_jira.png)
   3주차 번다운 차트
@@ -181,8 +183,35 @@
   ![5week_jira](./image/5week_jira.png)
   5주차 번다운 차트
 
+  ![6week_jira](./image/6week_jira.PNG)
+  5주차 번다운 차트
+
 - Confluence를 통한 문서 작업 및 기록
 
 ### 3. Operation
+
+- Web
+
+| 웹 페이지 | 주요 화면 |
+| ---- | ---- |
+| 웹 페이지 메인화면| 관리자 페이지 메인화면 |
+| <img width="400" src="image/web/web_main.PNG"> | <img width="400" src="image/web/admin_main.png"> |
+| 주문을 넣기 위한 사용자 페이지, 관리를 위한 관리자 페이지로 이동할 수 있습니다 | 주요 기능을 간소화하여 메인화면에서 한 눈에 보기 쉽습니다 |
+| 기간별 주문 데이터 조회 | 지역별 주문 데이터 조회 |
+| <img width="400" src="image/web/admin_date.png"> | <img width="400" src="image/web/admin_region.png"> |
+| 일주일, 한 달, 세 달, 6개월, 1년의 주문 건수 데이터를 조회할 수 있습니다 | 도, 광역시별로 배송 현황을 조회할 수 있습니다 |
+| 물류 분석 데이터 조회 | 공정 현황 조회 |
+| <img width="400" src="image/web/admin_logistics.png"> | <img width="400" src="image/web/admin_machine.png"> |
+| 물류 재고와 소비량을 분석하여 나타냅니다 | 주요 공정의 현황을 나타냅니다 |
+| 기기 제어 | cctv |
+| <img width="400" src="image/web/admin_control.png"> | <img width="400" src="image/web/admin_cctv.png"> |
+| 에러가 발생했을 시 단면도를 통해 확인하고, 비상 상황에서 전체 공정의 전원을 제어할 수 있습니다 | CCTV를 통해 메인 공정을 실시간으로 확인할 수 있습니다 |
+
+- HW
+
+| HW | 주요 작동 영상 |
+| ---- | ---- |
+| 주문 피스톤 작동 영상 | 상품 분류막 작동 영상 |
+| 영상 추후 업로드 예정 | 영상 추후 업로드 예정 |
 
 ### 4. ETC

@@ -1,6 +1,8 @@
 <template>
   <div class="loginForm">
-    <div><img class="MainTurtle" src="./MainTurtle.png" /></div>
+    <router-link to="/">
+      <div><img class="MainTurtle" src="./MainTurtle.png" /></div>
+    </router-link>
     &nbsp;
     <v-sheet width="300" class="mx-auto">
       <h2 style="color: white">로그인</h2>
@@ -26,13 +28,23 @@
       </v-form>
     </v-sheet>
     <div class="registDiv">
-      <v-btn block class="mt-2" router-link :to="{ name: 'AdminRegist' }"> 관리자 등록 </v-btn>
+      <v-btn block class="mt-2" @click.prevent="registerAdmin"> 관리자 등록 </v-btn>
     </div>
   </div>
+  <public-modal
+    :isVisible="showModal"
+    title="발표 중 입니다."
+    message="발표가 끝날 때 까지 기다려주세요 ㅠㅠ"
+    @close="closeModal"
+  />
 </template>
 
 <script>
+import PublicModal from "@/components/Modals/PublicModal.vue";
 export default {
+  components: {
+    PublicModal,
+  },
   name: "AdminLogin",
   data: () => ({
     admin: {
@@ -40,10 +52,22 @@ export default {
       password: "",
     },
     nameRules: [(v) => !!v || "해당 칸을 입력해주세요"],
+    showModal: false,
   }),
   methods: {
+    closeModal() {
+      this.showModal = false; // 모달 창을 닫습니다.
+    },
     doAdminLogin() {
+      if (this.admin.admin_id !== "test") {
+        this.showModal = true;
+        return;
+      }
       this.$store.dispatch("admin/adminLogin", this.admin);
+    },
+    registerAdmin() {
+      this.showModal = true;
+      return;
     },
   },
 };
