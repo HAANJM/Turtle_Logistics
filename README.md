@@ -44,8 +44,8 @@
 ## 팀원 소개 및 담당 역할
 
 - 한장민 (팀장) : Frontend 메인, Backend 보조, 발표
-- 이종민 (팀원) : Backend 메인, Frontend 보조
-- 권도현 (팀원) : Backend 메인, Frontend 보조
+- 이종민 (팀원) : Backend 메인, 인프라 구축, Frontend 보조
+- 권도현 (팀원) : Backend 메인, 인프라 구축, Frontend 보조
 - 이승혁 (팀원) : IoT 개발
 - 채문희 (팀원) : 기구 개발
 - 서강운 (팀원) : IoT 개발
