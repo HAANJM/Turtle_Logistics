@@ -63,7 +63,7 @@
 ## 기술 스택
 
 - IoT : PyQT, AWS IoT Core, MQTT, OpenCV, C++, Python
-- Frontend : Vue.js, JS
+- Frontend : Vue.js 3, Vuex, Vue-router, Axios, vue-chart.js
 - Backend : Java, Spring Boot, Spring Security, MySQL, JPA
 - Infra : Jenkins, AWS EC2, NginX, Docker, Certbot
 
